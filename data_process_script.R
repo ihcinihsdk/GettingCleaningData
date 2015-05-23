@@ -1,0 +1,141 @@
+library(dplyr)
+
+get_activity <- function(X, tmp_table) {
+	tmp_table[X]
+}
+
+Y_train <- read.table("train/Y_train.txt", header = FALSE, col.names="V")
+Y_test <- read.table("test/Y_test.txt", header = FALSE, col.names="V")
+activity_id <- c(Y_train$V, Y_test$V)
+
+activity_names <- read.table("activity_labels.txt", col.names=c("activity_id", "activity_name"))
+activity <- sapply(activity_id, get_activity, activity_names$activity_name)
+
+subject_train <- read.table("train/subject_train.txt", header = FALSE, col.names="subject")
+subject_test <- read.table("test/subject_test.txt", header = FALSE, col.names="subject")
+subject <- c(subject_train$subject, subject_test$subject)
+subject <- as.data.frame(subject)
+
+	
+activity <- as.data.frame(activity)
+
+body_acc_x_train <- as.matrix(read.table("train/Inertial Signals/body_acc_x_train.txt", header = FALSE))
+body_acc_x_train_ave <- rowMeans(body_acc_x_train)
+body_acc_x_train_sd <- apply(body_acc_x_train, 1, sd)
+body_acc_x_test <- as.matrix(read.table("test/Inertial Signals/body_acc_x_test.txt", header = FALSE))
+body_acc_x_test_ave <- rowMeans(body_acc_x_test)
+body_acc_x_test_sd <- apply(body_acc_x_test, 1, sd)
+body_acc_x_ave <- c(body_acc_x_train_ave, body_acc_x_test_ave)
+body_acc_x_sd <- c(body_acc_x_train_sd, body_acc_x_test_sd)
+
+body_acc_y_train <- as.matrix(read.table("train/Inertial Signals/body_acc_y_train.txt", header = FALSE))
+body_acc_y_train_ave <- rowMeans(body_acc_y_train)
+body_acc_y_train_sd <- apply(body_acc_y_train, 1, sd)
+body_acc_y_test <- as.matrix(read.table("test/Inertial Signals/body_acc_y_test.txt", header = FALSE))
+body_acc_y_test_ave <- rowMeans(body_acc_y_test)
+body_acc_y_test_sd <- apply(body_acc_y_test, 1, sd)
+body_acc_y_ave <- c(body_acc_y_train_ave, body_acc_y_test_ave)
+body_acc_y_sd <- c(body_acc_y_train_sd, body_acc_y_test_sd)
+
+body_acc_z_train <- as.matrix(read.table("train/Inertial Signals/body_acc_z_train.txt", header = FALSE))
+body_acc_z_train_ave <- rowMeans(body_acc_z_train)
+body_acc_z_train_sd <- apply(body_acc_z_train, 1, sd)
+body_acc_z_test <- as.matrix(read.table("test/Inertial Signals/body_acc_z_test.txt", header = FALSE))
+body_acc_z_test_ave <- rowMeans(body_acc_z_test)
+body_acc_z_test_sd <- apply(body_acc_z_test, 1, sd)
+body_acc_z_ave <- c(body_acc_z_train_ave, body_acc_z_test_ave)
+body_acc_z_sd <- c(body_acc_z_train_sd, body_acc_z_test_sd)
+
+body_gyro_x_train <- as.matrix(read.table("train/Inertial Signals/body_gyro_x_train.txt", header = FALSE))
+body_gyro_x_train_ave <- rowMeans(body_gyro_x_train)
+body_gyro_x_train_sd <- apply(body_gyro_x_train, 1, sd)
+body_gyro_x_test <- as.matrix(read.table("test/Inertial Signals/body_gyro_x_test.txt", header = FALSE))
+body_gyro_x_test_ave <- rowMeans(body_gyro_x_test)
+body_gyro_x_test_sd <- apply(body_gyro_x_test, 1, sd)
+body_gyro_x_ave <- c(body_gyro_x_train_ave, body_gyro_x_test_ave)
+body_gyro_x_sd <- c(body_gyro_x_train_sd, body_gyro_x_test_sd)
+
+body_gyro_y_train <- as.matrix(read.table("train/Inertial Signals/body_gyro_y_train.txt", header = FALSE))
+body_gyro_y_train_ave <- rowMeans(body_gyro_y_train)
+body_gyro_y_train_sd <- apply(body_gyro_y_train, 1, sd)
+body_gyro_y_test <- as.matrix(read.table("test/Inertial Signals/body_gyro_y_test.txt", header = FALSE))
+body_gyro_y_test_ave <- rowMeans(body_gyro_y_test)
+body_gyro_y_test_sd <- apply(body_gyro_y_test, 1, sd)
+body_gyro_y_ave <- c(body_gyro_y_train_ave, body_gyro_y_test_ave)
+body_gyro_y_sd <- c(body_gyro_y_train_sd, body_gyro_y_test_sd)
+
+body_gyro_z_train <- as.matrix(read.table("train/Inertial Signals/body_gyro_z_train.txt", header = FALSE))
+body_gyro_z_train_ave <- rowMeans(body_gyro_z_train)
+body_gyro_z_train_sd <- apply(body_gyro_z_train, 1, sd)
+body_gyro_z_test <- as.matrix(read.table("test/Inertial Signals/body_gyro_z_test.txt", header = FALSE))
+body_gyro_z_test_ave <- rowMeans(body_gyro_z_test)
+body_gyro_z_test_sd <- apply(body_gyro_z_test, 1, sd)
+body_gyro_z_ave <- c(body_gyro_z_train_ave, body_gyro_z_test_ave)
+body_gyro_z_sd <- c(body_gyro_z_train_sd, body_gyro_z_test_sd)
+
+total_acc_x_train <- as.matrix(read.table("train/Inertial Signals/total_acc_x_train.txt", header = FALSE))
+total_acc_x_train_ave <- rowMeans(total_acc_x_train)
+total_acc_x_train_sd <- apply(total_acc_x_train, 1, sd)
+total_acc_x_test <- as.matrix(read.table("test/Inertial Signals/total_acc_x_test.txt", header = FALSE))
+total_acc_x_test_ave <- rowMeans(total_acc_x_test)
+total_acc_x_test_sd <- apply(total_acc_x_test, 1, sd)
+total_acc_x_ave <- c(total_acc_x_train_ave, total_acc_x_test_ave)
+total_acc_x_sd <- c(total_acc_x_train_sd, total_acc_x_test_sd)
+
+total_acc_y_train <- as.matrix(read.table("train/Inertial Signals/total_acc_y_train.txt", header = FALSE))
+total_acc_y_train_ave <- rowMeans(total_acc_y_train)
+total_acc_y_train_sd <- apply(total_acc_y_train, 1, sd)
+total_acc_y_test <- as.matrix(read.table("test/Inertial Signals/total_acc_y_test.txt", header = FALSE))
+total_acc_y_test_ave <- rowMeans(total_acc_y_test)
+total_acc_y_test_sd <- apply(total_acc_y_test, 1, sd)
+total_acc_y_ave <- c(total_acc_y_train_ave, total_acc_y_test_ave)
+total_acc_y_sd <- c(total_acc_y_train_sd, total_acc_y_test_sd)
+
+total_acc_z_train <- as.matrix(read.table("train/Inertial Signals/total_acc_z_train.txt", header = FALSE))
+total_acc_z_train_ave <- rowMeans(total_acc_z_train)
+total_acc_z_train_sd <- apply(total_acc_z_train, 1, sd)
+total_acc_z_test <- as.matrix(read.table("test/Inertial Signals/total_acc_z_test.txt", header = FALSE))
+total_acc_z_test_ave <- rowMeans(total_acc_z_test)
+total_acc_z_test_sd <- apply(total_acc_z_test, 1, sd)
+total_acc_z_ave <- c(total_acc_z_train_ave, total_acc_z_test_ave)
+total_acc_z_sd <- c(total_acc_z_train_sd, total_acc_z_test_sd)
+
+all_data <- cbind(activity, subject)
+all_data <- cbind(all_data, body_acc_x_ave)
+all_data <- cbind(all_data, body_acc_x_sd)
+all_data <- cbind(all_data, body_acc_y_ave)
+all_data <- cbind(all_data, body_acc_y_sd)
+all_data <- cbind(all_data, body_acc_z_ave)
+all_data <- cbind(all_data, body_acc_z_sd)
+all_data <- cbind(all_data, body_gyro_x_ave)
+all_data <- cbind(all_data, body_gyro_x_sd)
+all_data <- cbind(all_data, body_gyro_y_ave)
+all_data <- cbind(all_data, body_gyro_y_sd)
+all_data <- cbind(all_data, body_gyro_z_ave)
+all_data <- cbind(all_data, body_gyro_z_sd)
+all_data <- cbind(all_data, total_acc_x_ave)
+all_data <- cbind(all_data, total_acc_x_sd)
+all_data <- cbind(all_data, total_acc_y_ave)
+all_data <- cbind(all_data, total_acc_y_sd)
+all_data <- cbind(all_data, total_acc_z_ave)
+all_data <- cbind(all_data, total_acc_z_sd)
+
+feature_names <- read.table("features.txt", header = FALSE, col.names=c("feature_id", "feature_name"))
+X_train <- read.table("train/X_train.txt", header = FALSE)
+X_test <- read.table("test/X_test.txt", header = FALSE)
+features <- rbind(X_train, X_test)
+names(features) <- feature_names$feature_name
+all_data <- cbind(all_data, features)
+
+all_data_group_by_activity <- group_by(all_data, activity)
+mean_by_activity <- aggregate(all_data_group_by_activity[,3:ncol(all_data_group_by_activity)], by=list(all_data_group_by_activity$activity), FUN=mean)
+names(mean_by_activity)[1] = "activity"
+
+all_data_group_by_subject <- group_by(all_data, subject)
+mean_by_subject <- aggregate(all_data_group_by_subject[,3:ncol(all_data_group_by_subject)], by=list(all_data_group_by_subject$subject), FUN=mean)
+names(mean_by_subject)[1] = "subject"
+
+write.table(all_data, "all_data_tidy.txt", row.names=FALSE)
+write.table(mean_by_activity, "mean_by_activity.txt", row.names=FALSE)
+write.table(mean_by_subject, "mean_by_subject.txt", row.names=FALSE)
+
